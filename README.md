@@ -24,4 +24,5 @@ You must not use any third party Maching Learning library or tools , all the ele
 !!!Proj Solution Descript!!!
 
 -Input is done in input.txt File // Put data in the file and write "start" in console // To stop the programm write "stop"
+
 -Input data could not be too little, the accuracy will fall down
