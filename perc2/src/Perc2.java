@@ -6,16 +6,22 @@ public class Perc2 {
     double alpha = 0;
     private List<DataWrapper> train;
     private List<DataWrapper> test;
-    private double[] weights = new double[4];
+    private double[] weights = new double[26];
     double rate;
     int numOfIter;
+    private String Species;
 
-    public Perc2(List<DataWrapper> train, List<DataWrapper> test, double rate, int numOfIter, double alpha) {
+    public Perc2(List<DataWrapper> train, List<DataWrapper> test, double rate, int numOfIter, double alpha, String species) {
         this.train = train;
+        this.Species = species;
         this.test = test;
         this.rate = rate;
         this.numOfIter = numOfIter;
         this.alpha = alpha;
+    }
+
+    public String getSpecies() {
+        return Species;
     }
 
     //learn without alpha
@@ -41,7 +47,7 @@ public class Perc2 {
         int totalCor = 0;
         for (int i = 0; i < test.size(); i++) {
             res = countNet(test.get(i).getValues());
-            System.out.println(res + " // " +test.get(i).getSpeciesInt() + " // " + test.get(i).getSpecies() );
+            //System.out.println(res + " // " +test.get(i).getSpeciesInt() + " // " + test.get(i).getSpecies() );
             if(res == test.get(i).getSpeciesInt()){
                 totalCor++;
             }
@@ -87,7 +93,7 @@ public class Perc2 {
         int totalCor = 0;
         for (int i = 0; i < test.size(); i++) {
             res = countNetA(test.get(i).getValues());
-            System.out.println(res + " // " +test.get(i).getSpeciesInt() + " // " + test.get(i).getSpecies() );
+            //System.out.println(res + " // " +test.get(i).getSpeciesInt() + " // " + test.get(i).getSpecies() );
             if(res == test.get(i).getSpeciesInt()){
                 totalCor++;
             }

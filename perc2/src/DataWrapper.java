@@ -1,45 +1,34 @@
+import java.sql.SQLOutput;
 import java.util.Arrays;
+import java.util.HashMap;
 
 public final class DataWrapper {
-    private final String species;
+    //private final String species;
     private int speciesInt;
-    private final double[] values;
+    private  double[] values;
+    private HashMap<String, Integer> vals;
+    private String species;
 
-    public DataWrapper(String data, String predict) {
-        String[] temp = data
-                .replaceAll(" +","")
-                .replaceAll(",", "\\.")
-                .split("\t");
-
-        this.species = temp[temp.length-1];
-        if(temp[temp.length-1].equals(predict)){
+    public DataWrapper(HashMap<String, Integer> data, String predict, String predict2, int total) {
+        this.values = new double[26];
+        this.species = predict2;
+        vals = data;
+        for (int i = 'A'; i <= 'Z'; i++) {
+            char c = (char)i;
+            String c1 = String.valueOf(c);
+            if(!data.containsKey(c1)){
+                this.values[i-'A'] = 0;
+            }else{
+                Double m = (double)data.get(c1);
+                Double m1 = (double)total;
+                this.values[i-'A'] = m/m1;
+            }
+        }
+        if(predict2.equals(predict)){
             this.speciesInt = 1;
         }else{
             this.speciesInt = 0;
         }
-
-        this.values = new double[temp.length-1];
-        for (int i = 0; i < this.values.length; i++) {
-            this.values[i] = Double.parseDouble(temp[i]);
-        }
-    }
-
-    public DataWrapper(String data) {
-        String[] temp = data
-                .replaceAll(" +","")
-                .replaceAll(",", "\\.")
-                .split("\t");
-
-        this.species = temp[temp.length-1];
-        this.values = new double[temp.length-1];
-        for (int i = 0; i < this.values.length; i++) {
-            this.values[i] = Double.parseDouble(temp[i]);
-        }
-    }
-
-    public DataWrapper(String species, double[] values) {
-        this.species = species;
-        this.values = values;
     }
 
     public String getSpecies() {
@@ -49,9 +38,13 @@ public final class DataWrapper {
     @Override
     public String toString() {
         return "DataWrapper{" +
-                "species='" + species + '\'' +
+                "species='" + speciesInt + '\'' +
                 ", values=" + Arrays.toString(values) +
                 '}';
+    }
+
+    public HashMap<String, Integer> getVals() {
+        return vals;
     }
 
     public double[] getValues() {
